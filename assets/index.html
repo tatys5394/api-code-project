@@ -5,11 +5,72 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Quiz</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/reset.css">
 </head>
 <body>
-    <script src="./script.js">
-    </script>
+    <div>
+        <h1>Coding Quiz Challenge</h1>
+       <p><h2>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your scoretime by ten seconds!</h2></p> 
+        <button id="start">Start Quiz!</button>   
+    </div>
+    <div>
+        <!-- start timer -->
+
+    </div>
+    <div>
+        <!-- ask first question -->
+        <h3>Question #1: Commonly used data types DO NOT include </h3>
+        <button id="strings">1.  strings </button>
+        <button id="booleans">2.  booleans </button>
+        <button id="alerts">3.  alerts </button>
+        <button id="numbers">4. numbers </button>
+        
+        <h3>Question #2: The condition in an if/else statement is enclosed within ____. </h3>
+        <button id="quotes">1.  quotes </button>
+        <button id="curly-brackets">2.  curly brackets </button>
+        <button id="parenthesis">3.  parenthesis </button>
+        <button id="square-brackets">4.  square brackets </button>
+
+        <h3>Question #3: Arrays in Javascript can be used to store ___. </h3>
+        <button id="quotes">1.  numbers and strings </button>
+        <button id="curly-brackets">2.  other arrays </button>
+        <button id="parenthesis">3.  booleans </button>
+        <button id="square-brackets">4.  all of the above </button>
+
+        <h3>Question #4: String values must be enclosed within ___ when being assigned to variables. </h3>
+        <button id="commas"> 1. commas </button>
+        <button id="curly-brackets">2.  curly brackets </button>
+        <button id="quotes">3.  quotes </button>
+        <button id="curly-brackets">4.  curly brackets </button>
+
+        <h3>Question #5: A very useful tool used during development and debugging for printing content to the debugger is: </h3>
+        <button id="javascript"> 1. Javascript </button>
+        <button id="terminal-bash">2. Terminal/Bash </button>
+        <button id="for-loops">3. For Loops </button>
+        <button id="console-log">4.  Console Log </button>
+    </div>
+
+    <!-- All done section -->
+    <div>
+        <h3>
+            All Done!
+        </h3>
+
+        <p>
+            Enter initials:
+            <button id="submit"> submit</button>
+        </p>
+        <!--  -->
+    </div>
+    <div>
+        <h1>
+            Highscores
+        </h1>
+        <button id="go-back">Go Back </button>
+        <button id="clearhighscores">Clear Highscores </button>
+    </div>
 </body>
+<script src="./script.js">
+</script>
 </html>

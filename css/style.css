@@ -1,0 +1,10 @@
+#answer-choices button {
+    background-color: purple;
+    color:whitesmoke;
+    width: 15%;
+}
+
+#answer-choices {
+    display: flex;
+    flex-direction: column;
+}

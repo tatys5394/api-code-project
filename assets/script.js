@@ -5,6 +5,9 @@ var timeLeftEl = document.querySelector("#time-left");
 
 var clickStart = true;
 
+var answerEl = document.querySelector("#answer");
+var titleEl = document.querySelector("#quiz-title")
+var explanationEl = document.querySelector("#quiz-explanation")
 var startEl = document.querySelector("#start");
 var timeLeftEl = document.querySelector("#time-left");
 var messageEl = document.querySelector("#message");
@@ -12,7 +15,7 @@ var questionEl = document.querySelector("#question");
 var answerChoicesEl = document.querySelector("#answer-choices");
 var timeLeft = 75;
 var timer;
-var questionNo = 1;
+var questionNo = 0;
 var questions = [
   {
     question: "Commonly used data types DO NOT include",
@@ -21,7 +24,7 @@ var questions = [
       b: "booleans",
       c: "alerts",
       d: "numbers",
-      correct: "c",
+      correct: "alerts",
     },
   },
   {
@@ -31,17 +34,17 @@ var questions = [
       b: "curly-brackets",
       c: "parenthesis",
       d: "square-brackets",
-      correct: "",
+      correct: "parenthesis",
     },
   },
   {
     question: "Arrays in Javascript can be used to store ___.",
     answers: {
-      a: "quotes",
-      b: "curly-brackets",
-      c: "parenthesis",
-      d: "square-brackets",
-      correct: "",
+      a: "numbers and strings",
+      b: "other arrays",
+      c: "booleans",
+      d: "all of the above",
+      correct: "all of the above",
     },
   },
   {
@@ -51,7 +54,7 @@ var questions = [
       b: "curly-brackets",
       c: "quotes",
       d: "square-brackets",
-      correct: "",
+      correct: "quotes",
     },
   },
   {
@@ -61,10 +64,11 @@ var questions = [
       b: "terminal-bash",
       c: "for-loops",
       d: "console-log",
-      correct: "",
+      correct: "console-log",
     },
   }
 ];
+
 function everySecond() {
   timeLeft--;
   timeLeftEl.textContent = timeLeft;
@@ -75,6 +79,10 @@ function everySecond() {
 }
 
 function startQuiz() {
+  titleEl.style.display = "none";
+  explanationEl.style.display = "none";
+  startEl.style.display = "none";
+  
   timeLeftEl.textContent = timeLeft;
   timer = setInterval(everySecond, 1000);
   loadQuestion(questionNo);
@@ -86,19 +94,23 @@ function loadQuestion(number) {
   // create buttons and set text to answer choice text
   var answerChoiceA = document.createElement("button");
   answerChoiceA.textContent = questions[number].answers.a;
-  answerChoiceA.setAttribute("correct", "false");
+  answerChoiceA.setAttribute("correct", questions[number].answers.correct);
+  answerChoiceA.addEventListener("click", handleAnswerChoice)
 
   var answerChoiceB = document.createElement("button");
   answerChoiceB.textContent = questions[number].answers.b;
-  answerChoiceB.setAttribute("correct", "false");
+  answerChoiceB.setAttribute("correct", questions[number].answers.correct);
+  answerChoiceB.addEventListener("click", handleAnswerChoice)
 
   var answerChoiceC = document.createElement("button");
   answerChoiceC.textContent = questions[number].answers.c;
-  answerChoiceC.setAttribute("correct", "false");
+  answerChoiceC.setAttribute("correct", questions[number].answers.correct);
+  answerChoiceC.addEventListener("click", handleAnswerChoice)
 
   var answerChoiceD = document.createElement("button");
   answerChoiceD.textContent = questions[number].answers.d;
-  answerChoiceD.setAttribute("correct", "false");
+  answerChoiceD.setAttribute("correct", questions[number].answers.correct);
+  answerChoiceD.addEventListener("click", handleAnswerChoice)
 
   // place buttons in answer choices div
   answerChoicesEl.appendChild(answerChoiceA);
@@ -107,7 +119,19 @@ function loadQuestion(number) {
   answerChoicesEl.appendChild(answerChoiceD);
 }
 
-function handleAnswerChoice() {
+function handleAnswerChoice(event) {
+  
+
+  var choiceButton = event.srcElement;
+  var choiceButtonText = choiceButton.textContent;
+  var choiceButtonCorrect = choiceButton.getAttribute("correct");
+
+  if (choiceButtonText === choiceButtonCorrect) {
+    answerEl.textContent = "right"
+  } else {
+    answerEl.textContent = "wrong"
+  }
+
   // questionNo++;
   // if questionNo > 5
   // then FINISH

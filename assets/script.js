@@ -5,9 +5,17 @@ var timeLeftEl = document.querySelector("#time-left");
 
 var clickStart = true;
 
+var answerChoiceA = document.createElement("button");
+var answerChoiceB = document.createElement("button");
+var answerChoiceC = document.createElement("button");
+var answerChoiceD = document.createElement("button");
+
 var answerEl = document.querySelector("#answer");
-var titleEl = document.querySelector("#quiz-title")
-var explanationEl = document.querySelector("#quiz-explanation")
+var answerText = document.querySelector("#answer-text");
+var nextQuestion = document.createElement("button");
+
+var titleEl = document.querySelector("#quiz-title");
+var explanationEl = document.querySelector("#quiz-explanation");
 var startEl = document.querySelector("#start");
 var timeLeftEl = document.querySelector("#time-left");
 var messageEl = document.querySelector("#message");
@@ -48,7 +56,8 @@ var questions = [
     },
   },
   {
-    question: "String values must be enclosed within ___ when being assigned to variables.",
+    question:
+      "String values must be enclosed within ___ when being assigned to variables.",
     answers: {
       a: "commas",
       b: "curly-brackets",
@@ -58,7 +67,8 @@ var questions = [
     },
   },
   {
-    question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    question:
+      "A very useful tool used during development and debugging for printing content to the debugger is:",
     answers: {
       a: "javascript",
       b: "terminal-bash",
@@ -66,7 +76,7 @@ var questions = [
       d: "console-log",
       correct: "console-log",
     },
-  }
+  },
 ];
 
 function everySecond() {
@@ -82,36 +92,16 @@ function startQuiz() {
   titleEl.style.display = "none";
   explanationEl.style.display = "none";
   startEl.style.display = "none";
-  
+
+  nextQuestion.textContent = "Next";
+  nextQuestion.addEventListener("click", loadQuestion);
+  nextQuestion.style.visibility = "hidden"; //visible
+  answerEl.appendChild(nextQuestion);
+
   timeLeftEl.textContent = timeLeft;
   timer = setInterval(everySecond, 1000);
-  loadQuestion(questionNo);
-}
-
-function loadQuestion(number) {
-  // set question text to question element
-  questionEl.textContent = questions[number].question;
-  // create buttons and set text to answer choice text
-  var answerChoiceA = document.createElement("button");
-  answerChoiceA.textContent = questions[number].answers.a;
-  answerChoiceA.setAttribute("correct", questions[number].answers.correct);
-  answerChoiceA.addEventListener("click", handleAnswerChoice)
-
-  var answerChoiceB = document.createElement("button");
-  answerChoiceB.textContent = questions[number].answers.b;
-  answerChoiceB.setAttribute("correct", questions[number].answers.correct);
-  answerChoiceB.addEventListener("click", handleAnswerChoice)
-
-  var answerChoiceC = document.createElement("button");
-  answerChoiceC.textContent = questions[number].answers.c;
-  answerChoiceC.setAttribute("correct", questions[number].answers.correct);
-  answerChoiceC.addEventListener("click", handleAnswerChoice)
-
-  var answerChoiceD = document.createElement("button");
-  answerChoiceD.textContent = questions[number].answers.d;
-  answerChoiceD.setAttribute("correct", questions[number].answers.correct);
-  answerChoiceD.addEventListener("click", handleAnswerChoice)
-
+  loadQuestion();
+  
   // place buttons in answer choices div
   answerChoicesEl.appendChild(answerChoiceA);
   answerChoicesEl.appendChild(answerChoiceB);
@@ -119,17 +109,41 @@ function loadQuestion(number) {
   answerChoicesEl.appendChild(answerChoiceD);
 }
 
-function handleAnswerChoice(event) {
-  
+function loadQuestion() {
+  // set question text to question element
+  questionEl.textContent = questions[questionNo].question;
+  // create buttons and set text to answer choice text
+  answerChoiceA.textContent = questions[questionNo].answers.a;
+  answerChoiceA.setAttribute("correct", questions[questionNo].answers.correct);
+  answerChoiceA.addEventListener("click", handleAnswerChoice);
 
+  answerChoiceB.textContent = questions[questionNo].answers.b;
+  answerChoiceB.setAttribute("correct", questions[questionNo].answers.correct);
+  answerChoiceB.addEventListener("click", handleAnswerChoice);
+
+  answerChoiceC.textContent = questions[questionNo].answers.c;
+  answerChoiceC.setAttribute("correct", questions[questionNo].answers.correct);
+  answerChoiceC.addEventListener("click", handleAnswerChoice);
+
+  answerChoiceD.textContent = questions[questionNo].answers.d;
+  answerChoiceD.setAttribute("correct", questions[questionNo].answers.correct);
+  answerChoiceD.addEventListener("click", handleAnswerChoice);
+
+
+  questionNo++;
+}
+
+function handleAnswerChoice(event) {
   var choiceButton = event.srcElement;
   var choiceButtonText = choiceButton.textContent;
   var choiceButtonCorrect = choiceButton.getAttribute("correct");
 
+  nextQuestion.style.visibility = "visible";
+
   if (choiceButtonText === choiceButtonCorrect) {
-    answerEl.textContent = "right"
+    answerText.textContent = "right";
   } else {
-    answerEl.textContent = "wrong"
+    answerText.textContent = "wrong";
   }
 
   // questionNo++;

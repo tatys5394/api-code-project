@@ -14,6 +14,8 @@ var answerEl = document.querySelector("#answer");
 var answerText = document.querySelector("#answer-text");
 var nextQuestion = document.createElement("button");
 
+var endOfGame = document.querySelector("#end-of-game");
+
 var titleEl = document.querySelector("#quiz-title");
 var explanationEl = document.querySelector("#quiz-explanation");
 var startEl = document.querySelector("#start");
@@ -101,7 +103,7 @@ function startQuiz() {
   timeLeftEl.textContent = timeLeft;
   timer = setInterval(everySecond, 1000);
   loadQuestion();
-  
+
   // place buttons in answer choices div
   answerChoicesEl.appendChild(answerChoiceA);
   answerChoicesEl.appendChild(answerChoiceB);
@@ -110,6 +112,11 @@ function startQuiz() {
 }
 
 function loadQuestion() {
+  if (questionNo > 4) {
+    endQuiz();
+  }
+  answerText.textContent = "";
+
   // set question text to question element
   questionEl.textContent = questions[questionNo].question;
   // create buttons and set text to answer choice text
@@ -129,7 +136,6 @@ function loadQuestion() {
   answerChoiceD.setAttribute("correct", questions[questionNo].answers.correct);
   answerChoiceD.addEventListener("click", handleAnswerChoice);
 
-
   questionNo++;
 }
 
@@ -144,12 +150,44 @@ function handleAnswerChoice(event) {
     answerText.textContent = "right";
   } else {
     answerText.textContent = "wrong";
+    timeLeft = timeLeft - 10;
   }
 
-  // questionNo++;
-  // if questionNo > 5
-  // then FINISH
-  // else loadQuestion(questionNo)
+}
+
+function endQuiz() {
+  answerChoicesEl.style.display = "none";
+  nextQuestion.style.display = "none";
+  questionEl.style.display = "none";
+
+  clearInterval(timer)
+
+  var allDoneTitle = document.createElement("h1");
+  allDoneTitle.textContent = "All Done!!"
+  var finalText = document.createElement("p");
+  finalText.textContent = "Your final score is: " + timeLeft;
+
+  var inputBoxText = document.createElement("p");
+  inputBoxText.textContent = "Enter initials: ";
+
+  var inputBox = document.createElement("input");
+  inputBox.setAttribute("type", "text");
+
+  var inputBoxButton = document.createElement("button");
+  inputBoxButton.textContent = "Submint";
+  inputBoxButton.addEventListener("click", saveScore);
+
+
+  endOfGame.appendChild(allDoneTitle);
+  endOfGame.appendChild(finalText)
+  endOfGame.appendChild(inputBoxText)
+  endOfGame.appendChild(inputBox)
+  endOfGame.appendChild(inputBoxButton)
+
+}
+
+function saveScore() {
+
 }
 
 startEl.addEventListener("click", startQuiz);

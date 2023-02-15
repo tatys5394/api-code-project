@@ -1,5 +1,6 @@
 // Click start button
 var startEl = document.querySelector("#start");
+var quizViewEl = document.querySelector("#quiz-view");
 
 var timeLeftEl = document.querySelector("#time-left");
 
@@ -9,6 +10,10 @@ var answerChoiceA = document.createElement("button");
 var answerChoiceB = document.createElement("button");
 var answerChoiceC = document.createElement("button");
 var answerChoiceD = document.createElement("button");
+
+var highscoresEl = document.querySelector("#highscores")
+
+var scoresEl = document.querySelector("#scores")
 
 var answerEl = document.querySelector("#answer");
 var answerText = document.querySelector("#answer-text");
@@ -91,9 +96,14 @@ function everySecond() {
 }
 
 function startQuiz() {
-  titleEl.style.display = "none";
-  explanationEl.style.display = "none";
-  startEl.style.display = "none";
+  questionNo = 0;
+  timeLeft = 75
+  answerChoicesEl.style.visibility = "visible";
+  nextQuestion.style.visibility = "visible";
+  questionEl.style.visibility = "visible";
+  titleEl.style.visibility = "hidden";
+  explanationEl.style.visibility = "hidden";
+  startEl.style.visibility = "hidden";
 
   nextQuestion.textContent = "Next";
   nextQuestion.addEventListener("click", loadQuestion);
@@ -155,26 +165,36 @@ function handleAnswerChoice(event) {
 
 }
 
+var inputBox = document.createElement("input");
+
 function endQuiz() {
-  answerChoicesEl.style.display = "none";
-  nextQuestion.style.display = "none";
-  questionEl.style.display = "none";
+  endOfGame.style.visibility = "visible";
+  answerChoicesEl.style.visibility = "hidden";
+  nextQuestion.style.visibility = "hidden";
+  questionEl.style.visibility = "hidden";
+
+  finalText.textContent = "Your final score is: " + timeLeft;
 
   clearInterval(timer)
 
+}
+
+
+var finalText = document.createElement("p");
+
+function createEndOfGameView() {
   var allDoneTitle = document.createElement("h1");
-  allDoneTitle.textContent = "All Done!!"
-  var finalText = document.createElement("p");
+  allDoneTitle.textContent = "All Done!!";
+  
   finalText.textContent = "Your final score is: " + timeLeft;
 
   var inputBoxText = document.createElement("p");
   inputBoxText.textContent = "Enter initials: ";
 
-  var inputBox = document.createElement("input");
   inputBox.setAttribute("type", "text");
 
   var inputBoxButton = document.createElement("button");
-  inputBoxButton.textContent = "Submint";
+  inputBoxButton.textContent = "Submit";
   inputBoxButton.addEventListener("click", saveScore);
 
 
@@ -183,11 +203,92 @@ function endQuiz() {
   endOfGame.appendChild(inputBoxText)
   endOfGame.appendChild(inputBox)
   endOfGame.appendChild(inputBoxButton)
-
 }
 
 function saveScore() {
 
+  localStorage.setItem(inputBox.value, timeLeft)
+  endOfGame.style.visibility = "hidden";
+
+  titleEl.style.visibility = "visible";
+  explanationEl.style.visibility = "visible";
+  startEl.style.visibility = "visible";
+
 }
 
+
+
+var scoresTitle = document.createElement("h1");
+scoresTitle.textContent = "Highscores";
+
+var goBackButton = document.createElement("button");
+goBackButton.textContent = "Go Back";
+goBackButton.addEventListener("click", showStartQuiz);
+var clearButton = document.createElement("button");
+clearButton.textContent = "Clear";
+clearButton.addEventListener("click", clearLocalStorage);
+
+
+function showScore() {
+  scoresEl.style.visibility = "visible";
+  quizViewEl.style.visibility = "hidden";
+  titleEl.style.visibility = "hidden";
+  explanationEl.style.visibility = "hidden";
+  startEl.style.visibility = "hidden";
+
+  showAllStorage();
+}
+
+function clearLocalStorage() {
+  localStorage.clear()
+  showStartQuiz()
+}
+
+function showAllStorage() {
+
+  var values = [],
+      keys = Object.keys(localStorage),
+      i = keys.length;
+
+  while ( i-- ) {
+    var item = document.createElement("p");
+    item.textContent = keys[i] + ": " + localStorage.getItem(keys[i]);
+    scoresEl.appendChild(item);
+  }
+
+  return values;
+}
+
+function showStartQuiz() {
+  quizViewEl.style.visibility = "visible";
+  scoresEl.style.visibility = "hidden";
+  titleEl.style.visibility = "visible";
+  explanationEl.style.visibility = "visible";
+  startEl.style.visibility = "visible";
+}
+
+
+
 startEl.addEventListener("click", startQuiz);
+highscoresEl.addEventListener("click", showScore);
+
+function setUp() {
+  // scores view
+  scoresEl.appendChild(scoresTitle);
+  scoresEl.appendChild(goBackButton)
+  scoresEl.appendChild(clearButton)
+
+  scoresEl.style.visibility = "hidden";
+
+  // Example values
+  localStorage.clear();
+  localStorage.setItem("Tatiana",75);
+  localStorage.setItem("Sara",76);
+
+  // End of game
+  createEndOfGameView()
+  endOfGame.style.visibility = "hidden";
+
+}
+
+setUp()

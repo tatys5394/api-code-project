@@ -270,6 +270,7 @@ function showStartQuiz() {
 
 
 startEl.addEventListener("click", startQuiz);
+
 highscoresEl.addEventListener("click", showScore);
 
 function setUp() {

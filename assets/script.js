@@ -128,25 +128,27 @@ function loadQuestion() {
   answerText.textContent = "";
 
   // set question text to question element
-  questionEl.textContent = questions[questionNo].question;
-  // create buttons and set text to answer choice text
-  answerChoiceA.textContent = questions[questionNo].answers.a;
-  answerChoiceA.setAttribute("correct", questions[questionNo].answers.correct);
-  answerChoiceA.addEventListener("click", handleAnswerChoice);
-
-  answerChoiceB.textContent = questions[questionNo].answers.b;
-  answerChoiceB.setAttribute("correct", questions[questionNo].answers.correct);
-  answerChoiceB.addEventListener("click", handleAnswerChoice);
-
-  answerChoiceC.textContent = questions[questionNo].answers.c;
-  answerChoiceC.setAttribute("correct", questions[questionNo].answers.correct);
-  answerChoiceC.addEventListener("click", handleAnswerChoice);
-
-  answerChoiceD.textContent = questions[questionNo].answers.d;
-  answerChoiceD.setAttribute("correct", questions[questionNo].answers.correct);
-  answerChoiceD.addEventListener("click", handleAnswerChoice);
-
-  questionNo++;
+  if(questions[questionNo]){
+    questionEl.textContent = questions[questionNo].question;
+    // create buttons and set text to answer choice text
+    answerChoiceA.textContent = questions[questionNo].answers.a;
+    answerChoiceA.setAttribute("correct", questions[questionNo].answers.correct);
+    answerChoiceA.addEventListener("click", handleAnswerChoice);
+  
+    answerChoiceB.textContent = questions[questionNo].answers.b;
+    answerChoiceB.setAttribute("correct", questions[questionNo].answers.correct);
+    answerChoiceB.addEventListener("click", handleAnswerChoice);
+  
+    answerChoiceC.textContent = questions[questionNo].answers.c;
+    answerChoiceC.setAttribute("correct", questions[questionNo].answers.correct);
+    answerChoiceC.addEventListener("click", handleAnswerChoice);
+  
+    answerChoiceD.textContent = questions[questionNo].answers.d;
+    answerChoiceD.setAttribute("correct", questions[questionNo].answers.correct);
+    answerChoiceD.addEventListener("click", handleAnswerChoice);
+  
+    questionNo++;
+  }
 }
 
 function handleAnswerChoice(event) {

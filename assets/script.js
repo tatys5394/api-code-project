@@ -89,21 +89,22 @@ var questions = [
 function everySecond() {
   timeLeft--;
   timeLeftEl.textContent = timeLeft;
-  if (timeLeft === 0) {
+  if (timeLeft < 0) {
     clearInterval(timer);
-    messageEl.textContent = "You're out of time! Game over :(";
+    messageEl.textContent = "You're out of time! Game over :("
+    endQuiz();
   }
 }
 
 function startQuiz() {
   questionNo = 0;
-  timeLeft = 75
+  timeLeft = 76
   answerChoicesEl.style.visibility = "visible";
   nextQuestion.style.visibility = "visible";
   questionEl.style.visibility = "visible";
-  titleEl.style.visibility = "hidden";
-  explanationEl.style.visibility = "hidden";
-  startEl.style.visibility = "hidden";
+  titleEl.style.display = "none";
+  explanationEl.style.display = "none";
+  startEl.style.display = "none";
 
   nextQuestion.textContent = "Next";
   nextQuestion.addEventListener("click", loadQuestion);
@@ -171,9 +172,9 @@ var inputBox = document.createElement("input");
 
 function endQuiz() {
   endOfGame.style.visibility = "visible";
-  answerChoicesEl.style.visibility = "hidden";
-  nextQuestion.style.visibility = "hidden";
-  questionEl.style.visibility = "hidden";
+  answerChoicesEl.style.display = "none";
+  nextQuestion.style.display = "none";
+  questionEl.style.display = "none";
 
   finalText.textContent = "Your final score is: " + timeLeft;
 

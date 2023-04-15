@@ -1,4 +1,4 @@
-# NOTE TAKER README
+# CODE QUIZ README
 
 ## Description
 
@@ -43,3 +43,7 @@ Display of Questions:
 
 Finished Quiz Display:
 ![logo](./images/final-score.png)
+
+## Links
+GitHub Link: https://github.com/tatys5394/api-code-project.git
+
